@@ -1,36 +1,6 @@
 var should = require('chai').should();
 var Defo = require('../defo');
 
-var ROWS = [
-// Name, Height, Weight, Country
-  ["Alsotang", 180, 60, "Chinese"],
-  ["YB", 170, 50, "Chinese"],
-  ["Jack", 180, 70, "American"],
-  ["Lucy", 170, 100, "American"]
-];
-
-var RESULTS = {
-  "Chinese": {
-    "Alsotang": {
-      "Height": 180,
-      "Weight": 60
-    },
-    "YB": {
-      "Height": 180,
-      "Weight": 60
-    }
-  },
-  "American": {
-    "Jack": {
-      "Height": 180,
-      "Weight": 70
-    },
-    "Lucy": {
-      "Height": 170,
-      "Weight": 100
-    }
-  }
-};
 
 var FOOBAR_ARRAY = ['foo', 'bar', 'foobar'];
 
@@ -58,8 +28,22 @@ describe('defo.test.js', function () {
         var defo = new Defo(defaultValue);
         var a = defo.get('a');
         var b = defo.get('b');
+        a.should.eql(defaultValue);
         a.should.eql(b);
         a.push(1);
+        a.should.not.eql(defaultValue);
+        a.should.not.eql(b);
+      });
+
+      it('Object', function () {
+        var defaultValue = {};
+        var defo = new Defo(defaultValue);
+        var a = defo.get('a');
+        var b = defo.get('b');
+        a.should.eql(defaultValue);
+        a.should.eql(b);
+        a.foo = 'bar';
+        a.should.not.eql(defaultValue);
         a.should.not.eql(b);
       });
     });
@@ -80,17 +64,69 @@ describe('defo.test.js', function () {
     it('should return correct value', function () {
       var defo = new Defo(function (key) {
         if (key === 1 || key === 2) {
-          return 1;
+          this.set(key, 1);
+          return this.get(key);
         }
         this.set(key, this.get(key - 1) + this.get(key - 2));
         return this.get(key);
       });
       defo.get(15).should.equal(610); // 610 is 15-th of fibonacci sequence
+      defo.get(20).should.equal(6765);
+      defo._backed.should.eql({ '1': 1, '2': 1, '3': 2, '4': 3,
+        '5': 5, '6': 8, '7': 13, '8': 21, '9': 34, '10': 55,
+        '11': 89, '12': 144, '13': 233, '14': 377, '15': 610,
+        '16': 987, '17': 1597, '18': 2584, '19': 4181,
+        '20': 6765 });
     });
   });
 
   describe('convert between two data structure', function () {
-    it('result should equal RESULTS');
+    var ROWS = [
+    // Name, Height, Weight, Country
+      ["Alsotang", 180, 60, "Chinese"],
+      ["YB", 165, 50, "Chinese"],
+      ["Jack", 179, 70, "American"],
+      ["Lucy", 170, 100, "American"]
+    ];
+    var RESULTS = {
+      "Chinese": {
+        "Alsotang": {
+          "Height": 180,
+          "Weight": 60
+        },
+        "YB": {
+          "Height": 165,
+          "Weight": 50
+        }
+      },
+      "American": {
+        "Jack": {
+          "Height": 179,
+          "Weight": 70
+        },
+        "Lucy": {
+          "Height": 170,
+          "Weight": 100
+        }
+      }
+    };
+    it('result should equal RESULTS', function () {
+      var result = new Defo( // in this Defo, key would be Chinese or American
+        new Defo( // would be Alsotang or Jack in this
+          new Defo() // Height or Weight
+          )
+        );
+      ROWS.forEach(function (person) {
+        var name = person[0],
+          height = person[1],
+          weight = person[2],
+          country = person[3];
+        result.get(country).get(name)
+        .set('Height', height)
+        .set('Weight', weight);
+      });
+      result.to_object().should.eql(RESULTS);
+    });
   });
 
   describe('#to_object()', function () {

@@ -1,7 +1,11 @@
 // start: a deepclone function
-// copy from: http://stackoverflow.com/questions/4459928/how-to-deep-clone-in-javascript
+// modified from: http://stackoverflow.com/questions/4459928/how-to-deep-clone-in-javascript
+// DO NOT copy it to your project because this modified version is specified for Defo
 var clone = function(item) {
   if (!item) { return item; } // null, undefined values check
+  if (item.isDefo) {
+    return Defo.clone(item);
+  }
 
   var types = [ Number, String, Boolean ],
     result;
@@ -47,7 +51,6 @@ var clone = function(item) {
       result = item;
     }
   }
-
   return result;
 };
 // end: a deepclone function
@@ -58,12 +61,22 @@ var clone = function(item) {
 var Defo = function () {
   this._backed = {};
   this.isDefo = true;
+  this._default = undefined;
+
   this.setDefault.apply(this, arguments);
+};
+
+Defo.clone = function (defo) {
+  var new_defo = new Defo();
+  new_defo._backed = clone(defo._backed);
+  new_defo.isDefo = clone(defo.isDefo);
+  new_defo._default = clone(defo._default);
+  return new_defo;
 };
 
 Defo.prototype.setDefault = function (d) {
   this._default = d;
-  return d;
+  return this;
 };
 
 Defo.prototype.set = function (key, value) {
@@ -79,8 +92,7 @@ Defo.prototype.get = function (key) {
     if (typeof _default === 'function') {
       value = _default.call(this, key);
     } else {
-      value = this._backed[key] = _default;
-      value = clone(value);
+      value = this._backed[key] = clone(_default);
     }
   }
   return value;
@@ -90,7 +102,7 @@ Defo.prototype.to_object = function () {
   var obj = clone(this._backed);
   for (var k in obj) {
     var value = obj[k];
-    if (value.isDefo) {
+    if (value instanceof Defo) {
       obj[k] = value.to_object();
     }
   }
