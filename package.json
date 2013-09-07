@@ -1,7 +1,7 @@
 {
   "name": "defo",
-  "version": "0.2.3",
-  "description": "A method_missing lib of JavaScript",
+  "version": "0.2.4",
+  "description": "A method_missing lib for JavaScript",
   "main": "defo.js",
   "directories": {
     "test": "test"
