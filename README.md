@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/alsotang/defo.png?branch=master)](https://travis-ci.org/alsotang/defo)
 
-A method_missing lib for JavaScript.
+A method_missing(or Hash.new) lib for JavaScript.
 
 Defo pronounce 'default' without /t$/.
 
