@@ -1,4 +1,4 @@
-// a deepclone function
+// start: a deepclone function
 var clone = function(item) {
   if (!item) { return item; } // null, undefined values check
 
@@ -49,6 +49,10 @@ var clone = function(item) {
 
   return result;
 };
+// end: a deepclone function
+
+
+// start: Defo
 
 var Defo = function () {
   this._backed = {};
@@ -60,21 +64,28 @@ Defo.prototype.setDefault = function (d) {
   return d;
 };
 
+Defo.prototype.set = function (key, value) {
+  this._backed[key] = value;
+  return value;
+};
+
 Defo.prototype.get = function (key) {
   var value;
   value = this._backed[key];
   if (value === undefined) {
     var _default = this._default;
     if (typeof _default === 'function') {
-      value = _default(key);
+      value = _default.call(this, key);
     } else {
       value = this._backed[key] = _default;
+      value = clone(value);
     }
-    value = clone(value);
   }
   return value;
 };
 
 module.exports = Defo;
+
+// end: Defo
 
 

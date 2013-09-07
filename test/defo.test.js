@@ -76,4 +76,15 @@ describe('defo.test.js', function () {
     });
   });
 
+  describe('memoize fibonacci', function () {
+    it('should return correct value', function () {
+      var defo = new Defo(function (key) {
+        if (key === 1 || key === 2) {
+          return 1;
+        }
+        return this.set(key, this.get(key - 1) + this.get(key - 2));
+      });
+      defo.get(15).should.equal(610); // 610 is 15-th of fibonacci sequence
+    });
+  });
 });
