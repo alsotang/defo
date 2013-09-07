@@ -1,4 +1,5 @@
 // start: a deepclone function
+// copy from: http://stackoverflow.com/questions/4459928/how-to-deep-clone-in-javascript
 var clone = function(item) {
   if (!item) { return item; } // null, undefined values check
 
@@ -56,6 +57,7 @@ var clone = function(item) {
 
 var Defo = function () {
   this._backed = {};
+  this.isDefo = true;
   this.setDefault.apply(this, arguments);
 };
 
@@ -66,7 +68,7 @@ Defo.prototype.setDefault = function (d) {
 
 Defo.prototype.set = function (key, value) {
   this._backed[key] = value;
-  return value;
+  return this;
 };
 
 Defo.prototype.get = function (key) {
@@ -82,6 +84,18 @@ Defo.prototype.get = function (key) {
     }
   }
   return value;
+};
+
+Defo.prototype.to_object = function () {
+  var obj = clone(this._backed);
+  for (var k in obj) {
+    var value = obj[k];
+    if (value.isDefo) {
+      obj[k] = value.to_object();
+    }
+  }
+
+  return obj;
 };
 
 module.exports = Defo;

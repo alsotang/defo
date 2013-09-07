@@ -82,9 +82,39 @@ describe('defo.test.js', function () {
         if (key === 1 || key === 2) {
           return 1;
         }
-        return this.set(key, this.get(key - 1) + this.get(key - 2));
+        this.set(key, this.get(key - 1) + this.get(key - 2));
+        return this.get(key);
       });
       defo.get(15).should.equal(610); // 610 is 15-th of fibonacci sequence
+    });
+  });
+
+  describe('convert between two data structure', function () {
+    it('result should equal RESULTS');
+  });
+
+  describe('#to_object()', function () {
+    it('should return a corresponding Object', function () {
+      var expect_obj = {
+        people: {
+          alsotang: {
+            age: 21
+          },
+          tj: {
+            age: -1
+          }
+        }
+      };
+      var obj = new Defo();
+      obj.set('people',
+        (new Defo())
+        .set('alsotang',
+          (new Defo()).set('age', 21))
+        .set('tj', {
+          age: -1
+        })
+      );
+      obj.to_object().should.eql(expect_obj);
     });
   });
 });
