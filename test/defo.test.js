@@ -1,4 +1,3 @@
-var _ = require('lodash');
 var should = require('chai').should();
 var Defo = require('../defo');
 
@@ -33,27 +32,48 @@ var RESULTS = {
   }
 };
 
+var FOOBAR_ARRAY = ['foo', 'bar', 'foobar'];
+
 describe('defo.test.js', function () {
-  describe('set default value without a key', function () {
+  describe('set default with a non-function', function () {
+    it('should return Array', function () {
+      var defaultValue = [1, 2, 3];
+      var defo = new Defo(defaultValue);
+      FOOBAR_ARRAY.forEach(function (key) {
+        defo.get(key).should.eql(defaultValue);
+      });
+    });
+
+    it('should return a String', function () {
+      var defaultValue = 'Hello World';
+      var defo = new Defo(defaultValue);
+      FOOBAR_ARRAY.forEach(function (key) {
+        defo.get(key).should.equal(defaultValue);
+      });
+    });
+
+    describe('each value is isolate', function () {
+      it('Array', function () {
+        var defaultValue = [];
+        var defo = new Defo(defaultValue);
+        var a = defo.get('a');
+        var b = defo.get('b');
+        a.should.eql(b);
+        a.push(1);
+        a.should.not.eql(b);
+      });
+    });
+  });
+
+  describe('set default with a function', function () {
     it('should return default value', function () {
-      var defo = new Defo('*', {});
-      _.isEqual({}, defo.get('somevar')).should.be.true;
-      _.isEqual({}, defo.get('notdefined')).should.be.true;
+      var defo = new Defo(function (key) {
+        return key;
+      });
+      FOOBAR_ARRAY.forEach(function (key) {
+        defo.get(key).should.equal(key);
+      });
     });
   });
 
-  it('should not have default value', function () {
-    var defo = new Defo();
-    should.not.exist(defo.get('somevar'));
-  });
-
-  it('should initizlize with a Hash', function () {
-    var defo = new Defo({
-      'a': 2,
-      'b': 4
-    });
-    defo.get('a').should.equal(2);
-    defo.get('b').should.equal(4);
-    should.not.exist(defo.get('c'));
-  });
 });

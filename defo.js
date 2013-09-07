@@ -1,45 +1,80 @@
+// a deepclone function
+var clone = function(item) {
+  if (!item) { return item; } // null, undefined values check
+
+  var types = [ Number, String, Boolean ],
+    result;
+
+  // normalizing primitives if someone did new String('aaa'), or new Number('444');
+  types.forEach(function(type) {
+    if (item instanceof type) {
+      result = type( item );
+    }
+  });
+
+  if (typeof result === "undefined") {
+    if (Object.prototype.toString.call( item ) === "[object Array]") {
+      result = [];
+      item.forEach(function(child, index, array) {
+        result[index] = clone( child );
+      });
+    } else if (typeof item === "object") {
+      // testing that this is DOM
+      if (item.nodeType && typeof item.cloneNode === "function") {
+        result = item.cloneNode( true );
+      } else if (!item.prototype) { // check that this is a literal
+        if (item instanceof Date) {
+          result = new Date(item);
+        } else {
+          // it is an object literal
+          result = {};
+          for (var i in item) {
+            result[i] = clone( item[i] );
+          }
+        }
+      } else {
+        // depending what you would like here,
+        // just keep the reference, or create new object
+        if (false && item.constructor) {
+          // would not advice to do that, reason? Read below
+          result = new item.constructor();
+        } else {
+          result = item;
+        }
+      }
+    } else {
+      result = item;
+    }
+  }
+
+  return result;
+};
+
 var Defo = function () {
   this._backed = {};
-  this._default = {};
   this.setDefault.apply(this, arguments);
 };
 
-var validKey = function (key) {
-  if (typeof key !== 'string') {
-    throw new Error("`key` should be a String");
-  }
-  return key;
-};
-
-Defo.prototype.setDefault = function () {
-  var key, defaultValue;
-  var args = [].slice.call(arguments);
-  if (args.length === 2 && (typeof args[0] === 'string')) {
-    key = args[0];
-    validKey(key);
-    defaultValue = args[1];
-    this._default[key] = defaultValue;
-  } else if (args.length === 1 && (typeof args[0] === 'object')) {
-    for (key in args[0]) {
-      if (args[0].hasOwnProperty(key)) {
-        validKey(key);
-        defaultValue = args[0][key];
-        this._default[key] = defaultValue;
-      }
-    }
-  }
+Defo.prototype.setDefault = function (d) {
+  this._default = d;
+  return d;
 };
 
 Defo.prototype.get = function (key) {
   var value;
-
   value = this._backed[key];
-  if (!value) {
-    this._backed[key] = value = this._default[key] || this._default['*'];
+  if (value === undefined) {
+    var _default = this._default;
+    if (typeof _default === 'function') {
+      value = _default(key);
+    } else {
+      value = this._backed[key] = _default;
+    }
+    value = clone(value);
   }
-
   return value;
 };
 
 module.exports = Defo;
+
 
