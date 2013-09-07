@@ -57,7 +57,6 @@ var clone = function(item) {
 
 
 // start: Defo
-
 var Defo = function () {
   this._backed = {};
   this.isDefo = true;
@@ -111,7 +110,6 @@ Defo.prototype.to_object = function () {
 };
 
 module.exports = Defo;
-
 // end: Defo
 
 

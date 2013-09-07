@@ -1,7 +1,7 @@
 {
   "name": "defo",
-  "version": "0.0.1",
-  "description": "A wrapped JS Object which can set default value ",
+  "version": "0.1.0",
+  "description": "A method_missing lib of JavaScript",
   "main": "defo.js",
   "directories": {
     "test": "test"
@@ -9,10 +9,10 @@
   "scripts": {
     "test": "mocha"
   },
+  "repository": "https://github.com/alsotang/defo",
   "keywords": [
     "object",
-    "default",
-    "value"
+    "default-value"
   ],
   "author": "Alsotang <alsotang@gmail.com>",
   "license": "MIT",
