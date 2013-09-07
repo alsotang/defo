@@ -1,3 +1,4 @@
+require('blanket');
 var should = require('chai').should();
 var Defo = require('../defo');
 
