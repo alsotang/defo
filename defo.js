@@ -82,10 +82,12 @@ Defo.prototype.set = function () {
   var key, value;
   var args = [].slice.call(arguments);
   if (args.length === 2) {
+    // (key, value) set
     key = args[0];
     value = args[1];
     this._backed[key] = value;
   } else if (args[0] instanceof Object) {
+    // Hash set
     var obj = args[0];
     for (key in obj) {
       value = obj[key];
@@ -95,6 +97,7 @@ Defo.prototype.set = function () {
   return this;
 };
 
+// Provide key, and Defo will return corresponding value to you
 Defo.prototype.get = function (key) {
   var value;
   value = this._backed[key];
@@ -109,6 +112,7 @@ Defo.prototype.get = function (key) {
   return value;
 };
 
+// create a new object from Defo object
 Defo.prototype.to_object = function () {
   var obj = clone(this._backed);
   for (var k in obj) {
