@@ -126,6 +126,71 @@ console.log(house.to_object());
 //   pet: { name: 'Piglet', age: 3 } }
 ```
 
+## Why I create Defo
+
+In my work, there are lots of situations to deal with data structure.
+
+For example, there is some rows from SQL databse:
+
+```js
+var ROWS = [
+// Name, Height, Weight, Country
+  ["Alsotang", 180, 60, "Chinese"],
+  ["YB", 165, 50, "Chinese"],
+  ["Jack", 179, 70, "American"],
+  ["Lucy", 170, 100, "American"]
+];
+```
+
+and I need to convert it to below:
+
+```js
+var RESULTS = {
+  "Chinese": {
+    "Alsotang": {
+      "Height": 180,
+      "Weight": 60
+    },
+    "YB": {
+      "Height": 165,
+      "Weight": 50
+    }
+  },
+  "American": {
+    "Jack": {
+      "Height": 179,
+      "Weight": 70
+    },
+    "Lucy": {
+      "Height": 170,
+      "Weight": 100
+    }
+  }
+};
+```
+
+With Defo, I can just write:
+
+```js
+var result = new Defo( // in this Defo, key would be Chinese or American
+  new Defo( // would be Alsotang or Jack in this
+    new Defo() // Height or Weight
+    )
+  );
+ROWS.forEach(function (person) {
+  var name = person[0],
+    height = person[1],
+    weight = person[2],
+    country = person[3];
+  result.get(country).get(name)
+  .set('Height', height)
+  .set('Weight', weight);
+});
+result.to_object().should.eql(RESULTS); // => true
+```
+
+And it works! Otherwise the implement code is ugly, especially when the data structure is not such simple.
+
 ## License
 
 MIT http://rem.mit-license.org
