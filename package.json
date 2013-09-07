@@ -1,0 +1,24 @@
+{
+  "name": "defo",
+  "version": "0.0.1",
+  "description": "A wrapped JS Object which can set default value ",
+  "main": "defo.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "object",
+    "default",
+    "value"
+  ],
+  "author": "Alsotang <alsotang@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "mocha": "~1.12.1",
+    "chai": "~1.7.2",
+    "lodash": "~1.3.1"
+  }
+}
