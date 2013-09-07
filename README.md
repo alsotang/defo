@@ -1,16 +1,12 @@
 # Defo
-----
 
 A method_missing lib of JavaScript.
 
 ## Installation
-----
 
 `npm install defo`
 
-
 ## Usage
-----
 
 Set default value with a literal JS Object
 ```javascript
@@ -33,6 +29,5 @@ console.log(defo.get('Hello')); // => Hello!!!
 ```
 
 ## License
-----
 
 MIT http://rem.mit-license.org
