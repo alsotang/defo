@@ -30,6 +30,10 @@ var defo = new Defo(function (key) {
 console.log(defo.get('Hello')); // => Hello!!!
 ```
 
+To see more(and more advanced) examples, please visit:
+
+[More Examples](https://github.com/alsotang/defo/blob/master/test/defo.test.js)
+
 ## License
 
 MIT http://rem.mit-license.org

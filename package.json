@@ -1,6 +1,6 @@
 {
   "name": "defo",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A method_missing lib of JavaScript",
   "main": "defo.js",
   "directories": {
@@ -19,5 +19,8 @@
   "devDependencies": {
     "mocha": "~1.12.1",
     "chai": "~1.7.2"
+  },
+  "engines": {
+    "node": "*"
   }
 }
