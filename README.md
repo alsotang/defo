@@ -4,7 +4,7 @@
 
 A method_missing lib for JavaScript.
 
-Defo announce 'default'.
+Defo pronounce 'default'.
 
 ## Installation
 
