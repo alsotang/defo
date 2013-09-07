@@ -24,5 +24,5 @@
   "engines": {
     "node": "*"
   },
-  "scripts": { "blanket": { "pattern": "defo.js"} }
+  "scripts": { "blanket": { "pattern": ["defo.js"]} }
 }
