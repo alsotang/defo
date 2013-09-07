@@ -153,4 +153,25 @@ describe('defo.test.js', function () {
       obj.to_object().should.eql(expect_obj);
     });
   });
+
+  describe('#set()', function () {
+    it('should support chaining set', function () {
+      var defo = new Defo();
+      defo
+        .set('name', 'Alsotang')
+        .set('age', 21);
+      defo.get('name').should.equal('Alsotang');
+      defo.get('age').should.equal(21);
+    });
+
+    it('should support Hash set', function () {
+      var defo = new Defo();
+      defo.set({
+        name: 'Alsotang',
+        age: 21
+      });
+      defo.get('name').should.equal('Alsotang');
+      defo.get('age').should.equal(21);
+    });
+  });
 });

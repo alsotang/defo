@@ -78,8 +78,20 @@ Defo.prototype.setDefault = function (d) {
   return this;
 };
 
-Defo.prototype.set = function (key, value) {
-  this._backed[key] = value;
+Defo.prototype.set = function () {
+  var key, value;
+  var args = [].slice.call(arguments);
+  if (args.length === 2) {
+    key = args[0];
+    value = args[1];
+    this._backed[key] = value;
+  } else if (args[0] instanceof Object) {
+    var obj = args[0];
+    for (key in obj) {
+      value = obj[key];
+      this._backed[key] = value;
+    }
+  }
   return this;
 };
 
