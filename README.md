@@ -4,7 +4,7 @@
 
 A method_missing lib for JavaScript.
 
-Defo pronounce 'default'.
+Defo pronounce 'default' without /t$/.
 
 ## Installation
 
