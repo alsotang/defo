@@ -36,12 +36,12 @@ To see more(and more advanced) examples, please visit:
 
 ## Documentation
 
-* initialize
-* set
-* get
-* to_object
+* #initialize
+* #set
+* #get
+* #to_object
 
-### initialize
+### #initialize
 
 Defo can be initialize when create a new Defo instance
 
@@ -61,7 +61,7 @@ var defo = new Defo(function (key) {
 });
 ```
 
-### set && get
+### #set && get
 
 ```js
 var defo = new Defo();
@@ -79,11 +79,24 @@ defo
   .set('person', {name: 'Alsotang', age: 21})
   .set('pet', {name: 'Piglet', age: 3});
 defo.get('person').height = 1.80;
-console.log(defo.to_object()); // => { person: { name: 'Alsotang', age: 21, height: 1.8 },
-                                       pet: { name: 'Piglet', age: 3 } }
+console.log(defo.to_object());
+// output:
+// { person: { name: 'Alsotang', age: 21, height: 1.8 },
+//   pet: { name: 'Piglet', age: 3 } }
 ```
 
-### to_object
+Hash set
+```js
+var defo = new Defo();
+defo.set({
+  name: 'Alsotang',
+  age: 21
+});
+defo.get('name').should.equal('Alsotang'); // => true
+defo.get('age').should.equal(21); // => true
+```
+
+### #to_object
 
 to_object would convert your Defo to a JavaScript Object.
 
