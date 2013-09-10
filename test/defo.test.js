@@ -62,7 +62,7 @@ describe('defo.test.js', function () {
 
   describe('memoize fibonacci', function () {
     it('should return correct value', function () {
-      var defo = new Defo(function (key) {
+      var fibonacci = new Defo(function (key) {
         if (key === 1 || key === 2) {
           this.set(key, 1);
           return this.get(key);
@@ -70,9 +70,9 @@ describe('defo.test.js', function () {
         this.set(key, this.get(key - 1) + this.get(key - 2));
         return this.get(key);
       });
-      defo.get(15).should.equal(610); // 610 is 15-th of fibonacci sequence
-      defo.get(20).should.equal(6765);
-      defo._backed.should.eql({ '1': 1, '2': 1, '3': 2, '4': 3,
+      fibonacci.get(15).should.equal(610); // 610 is 15-th of fibonacci sequence
+      fibonacci.get(20).should.equal(6765);
+      fibonacci._backed.should.eql({ '1': 1, '2': 1, '3': 2, '4': 3,
         '5': 5, '6': 8, '7': 13, '8': 21, '9': 34, '10': 55,
         '11': 89, '12': 144, '13': 233, '14': 377, '15': 610,
         '16': 987, '17': 1597, '18': 2584, '19': 4181,
