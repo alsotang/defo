@@ -16,8 +16,8 @@ Set default value with a literal JS Object
 ```javascript
 var Defo = require('defo');
 var defo = new Defo({a: 1, b: 2});
-console.log(defo.get('foo')); // => {a: 1, b: 2}
-console.log(defo.get('bar')); // => {a: 1, b: 2}
+console.log(defo.get('notExist')); // => {a: 1, b: 2}
+console.log(defo.get('lol<3')); // => {a: 1, b: 2}
 ```
 
 More advanced, with a Function
@@ -41,11 +41,11 @@ To see more(and more advanced) examples, please visit:
 * #initialize
 * #set
 * #get
-* #to_object
+* #toObject
 
 ### #initialize
 
-Defo can be initialize when create a new Defo instance
+Defo can be initialized when create a new Defo instance
 
 With literal object:
 
@@ -70,6 +70,7 @@ var defo = new Defo();
 defo.set('person', {name: 'Alsotang', age: 21});
 defo.get('person').height = 1.80;
 console.log(defo.get('person')); // => { name: 'Alsotang', age: 21, height: 1.8 }
+console.log(defo.get('<3')); // => undefined
 ```
 
 chaining set
@@ -81,13 +82,13 @@ defo
   .set('person', {name: 'Alsotang', age: 21})
   .set('pet', {name: 'Piglet', age: 3});
 defo.get('person').height = 1.80;
-console.log(defo.to_object());
+console.log(defo.toObject());
 // output:
 // { person: { name: 'Alsotang', age: 21, height: 1.8 },
 //   pet: { name: 'Piglet', age: 3 } }
 ```
 
-Hash set
+set with a Hash
 ```js
 var defo = new Defo();
 defo.set({
@@ -98,9 +99,9 @@ defo.get('name').should.equal('Alsotang'); // => true
 defo.get('age').should.equal(21); // => true
 ```
 
-### #to_object
+### #toObject
 
-to_object would convert your Defo to a JavaScript Object.
+toObject would convert your Defo to a JavaScript Object.
 
 This method will create a new object instead of modify Defo object.
 
@@ -120,7 +121,7 @@ house
   .set('person', person)
   .set('pet', pet);
 
-console.log(house.to_object());
+console.log(house.toObject());
 // output:
 // { person: { name: 'Alsotang', age: 21 },
 //   pet: { name: 'Piglet', age: 3 } }
@@ -128,9 +129,9 @@ console.log(house.to_object());
 
 ## Why I create Defo
 
-In my work, there are lots of situations to deal with data structure.
+In my work, there are lots of situations to deal with data structure transformation.
 
-For example, there is some rows from SQL databse:
+For example, there is some rows from SQL database:
 
 ```js
 var ROWS = [
@@ -142,7 +143,7 @@ var ROWS = [
 ];
 ```
 
-and I need to convert it to below:
+and I need to transform it to below:
 
 ```js
 var RESULTS = {
@@ -186,7 +187,7 @@ ROWS.forEach(function (person) {
   .set('Height', height)
   .set('Weight', weight);
 });
-result.to_object().should.eql(RESULTS); // => true
+result.toObject().should.eql(RESULTS); // => true
 ```
 
 And it works! Otherwise the implement code is ugly, especially when the data structure is not such simple.

@@ -1,3 +1,7 @@
 test
 .travis.yml
 .git*
+coverage.html
+.gitignore
+.jshintrc
+
