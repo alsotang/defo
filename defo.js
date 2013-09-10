@@ -128,12 +128,12 @@
   };
 
   // create a new object from Defo object
-  Defo.prototype.to_object = function () {
+  Defo.prototype.toObject = function () {
     var obj = clone(this._backed);
     for (var k in obj) {
       var value = obj[k];
       if (value instanceof Defo) {
-        obj[k] = value.to_object();
+        obj[k] = value.toObject();
       }
     }
 

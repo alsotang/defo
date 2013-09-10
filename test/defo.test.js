@@ -125,11 +125,11 @@ describe('defo.test.js', function () {
         .set('Height', height)
         .set('Weight', weight);
       });
-      result.to_object().should.eql(RESULTS);
+      result.toObject().should.eql(RESULTS);
     });
   });
 
-  describe('#to_object()', function () {
+  describe('#toObject()', function () {
     it('should return a corresponding Object', function () {
       var expect_obj = {
         people: {
@@ -150,7 +150,7 @@ describe('defo.test.js', function () {
           age: -1
         })
       );
-      obj.to_object().should.eql(expect_obj);
+      obj.toObject().should.eql(expect_obj);
     });
   });
 
