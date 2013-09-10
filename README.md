@@ -15,9 +15,9 @@ Defo pronounce 'default' without /t$/.
 Set default value with a literal JS Object
 ```javascript
 var Defo = require('defo');
-var defo = new Defo({a: 1, b: 2});
-console.log(defo.get('notExist')); // => {a: 1, b: 2}
-console.log(defo.get('lol<3')); // => {a: 1, b: 2}
+var defo = new Defo('@@@');
+console.log(defo.get('notExist')); // => '@@@'
+console.log(defo.get('lol<3')); // => '@@@'
 ```
 
 More advanced, with a Function

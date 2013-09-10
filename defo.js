@@ -115,8 +115,9 @@
   // Provide key, and Defo will return corresponding value to you
   Defo.prototype.get = function (key) {
     var value;
-    value = this._backed[key];
-    if (value === undefined) {
+    if (this._backed.hasOwnProperty(key)) {
+      value = this._backed[key];
+    } else {
       var _default = this._default;
       if (typeof _default === 'function') {
         value = _default.call(this, key);

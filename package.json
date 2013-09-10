@@ -1,6 +1,6 @@
 {
   "name": "defo",
-  "version": "2.1.2",
+  "version": "2.1.3",
   "description": "A method_missing(or Hash.new) lib for JavaScript",
   "main": "defo.js",
   "directories": {
